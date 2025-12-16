@@ -1,21 +1,103 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
   <meta charset="utf-8">
   <title>Makabe Buoy – JARE67</title>
+
+  <!-- 5分ごとにページ自体を再読み込み -->
+  <meta http-equiv="refresh" content="300">
+
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI",
+                   Helvetica, Arial, sans-serif;
+      margin: 40px;
+      background: #ffffff;
+      color: #222;
+    }
+
+    h1 {
+      font-size: 1.8em;
+      margin-bottom: 0.2em;
+    }
+
+    p {
+      margin-top: 0;
+      color: #555;
+    }
+
+    .meta {
+      margin: 1em 0;
+      padding: 0.8em 1em;
+      background: #f5f7fa;
+      border-left: 4px solid #2c6bed;
+      font-size: 0.95em;
+    }
+
+    img {
+      max-width: 100%;
+      height: auto;
+      border: 1px solid #ddd;
+      margin-top: 1em;
+    }
+
+    footer {
+      margin-top: 2em;
+      padding-top: 1em;
+      border-top: 1px solid #ddd;
+      font-size: 0.85em;
+      color: #666;
+    }
+
+    a {
+      color: #2c6bed;
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+  </style>
 </head>
+
 <body>
+
   <h1>Makabe Buoy – JARE67</h1>
-  <p>Latest buoy position and track.</p>
+  <p>Near-real-time GPS tracking of the Makabe buoy deployed during JARE67.</p>
 
-
+  <div class="meta">
+    This page automatically refreshes every 5 minutes.<br>
+    PNG and CSV files are always fetched with cache-busting enabled.
+  </div>
 
   <h2>Latest Map</h2>
-  <img src="MakabeBuoy_latest.png" style="max-width:100%;">
+
+  <!-- キャッシュ回避つきで画像を読み込む -->
+  <img id="buoymap" alt="Makabe Buoy Track (CEP ≤ 50 m)">
 
   <h2>Data</h2>
   <ul>
-    <li><a href="buoy_track.csv">Download buoy_track.csv</a></li>
+    <li>
+      <a id="csvlink">Download buoy_track.csv</a>
+    </li>
   </ul>
+
+  <footer>
+    Data are preliminary and subject to quality control.<br>
+    This site is intended for research and monitoring purposes.
+  </footer>
+
+  <script>
+    // ===== キャッシュ完全回避 =====
+    const ts = Date.now();
+
+    document.getElementById("buoymap").src =
+      "MakabeBuoy_latest.png?t=" + ts;
+
+    document.getElementById("csvlink").href =
+      "buoy_track.csv?t=" + ts;
+  </script>
+
 </body>
 </html>
+
